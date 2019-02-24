@@ -18,7 +18,6 @@ const auth = new GoTrue({
 async function created() {
 	const user = await this.$identity.currentUser();
 	await user.logout();
-	window.localStorage.clear();
 	this.$router.push('/sign-in');
 }
 

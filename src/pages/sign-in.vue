@@ -36,10 +36,9 @@ async function submit() {
 			this.password,
 			true,
 		);
-		window.localStorage.setItem('token', response.token.access_token);
 		this.$router.push('/admin/dashboard');
 	} catch (error) {
-		this.message = error.message;
+		this.message = `${error.message} 🚫`;
 	}
 }
 

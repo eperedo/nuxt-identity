@@ -25,7 +25,7 @@ function data() {
 }
 
 async function submit() {
-	const response = await this.$identity.requestPasswordRecovery(this.email);
+	await this.$identity.requestPasswordRecovery(this.email);
 }
 
 export default {

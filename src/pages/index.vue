@@ -49,10 +49,7 @@ async function created() {
 		if (token.length === 2) {
 			const [actionName, tokenValue] = token;
 			const action = actions[actionName];
-			const response = await this.$identity[action.method](tokenValue);
-			if (action.saveToken) {
-				window.localStorage.setItem('token', response.token.access_token);
-			}
+			const response = await this.$identity[action.method](tokenValue, true);
 			this.$router.push(action.route);
 		}
 	}
@@ -61,6 +58,7 @@ async function created() {
 async function submit() {
 	try {
 		const response = await this.$identity.signup(this.username, this.password);
+		this.message = 'Please check your email and confirm your account ✅';
 		this.$router.push('/sign-in');
 	} catch (error) {
 		this.message = error.message;
