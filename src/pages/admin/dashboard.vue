@@ -14,9 +14,10 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+import appBtn from '@/components/app-btn.vue';
 import appInput from '@/components/app-input.vue';
 import appText from '@/components/app-text.vue';
-import appBtn from '@/components/app-btn.vue';
 
 function data() {
 	return {
@@ -48,10 +49,17 @@ async function submit() {
 		await user.update({
 			data: { firstname: this.firstname, lastname: this.lastname },
 		});
-		this.message = 'User profile updated';
+		this.show({
+			message: 'User profile updated 👍🏼',
+			type: 'success',
+		});
 		this.status = 'finished';
 	} catch (error) {
 		this.status = 'error';
+		this.show({
+			message:
+				'We really tried, but could not finished your process, try again later please. 🚫',
+		});
 	}
 }
 
@@ -70,6 +78,9 @@ export default {
 	layout: 'admin',
 	methods: {
 		submit,
+		...mapActions({
+			show: 'notifications/show',
+		}),
 	},
 };
 </script>

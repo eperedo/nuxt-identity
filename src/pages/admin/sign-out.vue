@@ -15,7 +15,7 @@ async function created() {
 		await user.logout();
 		setTimeout(() => {
 			this.$router.push('/sign-in');
-		}, 1000);
+		}, 800);
 	} catch (error) {
 		alert('Wow wow, we cannot complete the logout process');
 	}

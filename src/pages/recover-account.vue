@@ -13,9 +13,10 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+import appBtn from '@/components/app-btn.vue';
 import appInput from '@/components/app-input.vue';
 import appText from '@/components/app-text.vue';
-import appBtn from '@/components/app-btn.vue';
 
 function data() {
 	return {
@@ -32,11 +33,11 @@ async function submit() {
 	this.status = 'loading';
 	try {
 		await this.$identity.requestPasswordRecovery(this.email);
-		alert('Check your email please');
+		this.show({ message: 'Check your email please 😅', type: 'success' });
 		this.status = 'finished';
 	} catch (error) {
 		this.status = 'error';
-		alert(error.json.msg);
+		this.show({ message: error.json.msg });
 	}
 }
 
@@ -53,6 +54,9 @@ export default {
 	data,
 	methods: {
 		submit,
+		...mapActions({
+			show: 'notifications/show',
+		}),
 	},
 };
 </script>

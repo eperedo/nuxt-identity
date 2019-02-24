@@ -4,9 +4,6 @@
       <app-text tag-name="h2" class="medium">{{ title }}</app-text>
     </header>
     <form class="form-container" @submit.prevent="$emit('submit', { username, password })">
-      <div class="alert" v-if="message">
-        <p class="alert text">{{ message }}</p>
-      </div>
       <app-input type="email" id="username" v-model="username" label="Email"/>
       <app-input type="password" id="password" v-model="password" label="Password"/>
       <app-btn :disabled="buttonStatus" type="submit" :text="buttonText"/>
@@ -42,9 +39,6 @@ export default {
 		buttonText: {
 			type: String,
 			default: '',
-		},
-		message: {
-			type: String,
 		},
 		title: {
 			type: String,

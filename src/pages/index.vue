@@ -9,6 +9,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 import appSignForm from '@/components/app-sign-form.vue';
 
 const actions = {
@@ -36,7 +37,10 @@ async function created() {
 	const { hash } = window.location;
 	if (hash) {
 		this.status = 'loading';
-		this.message = 'Verifying Account, please wait...';
+		this.show({
+			message: 'Verifying Account, please wait... 😅',
+			type: 'warning',
+		});
 		const token = hash.split('=');
 		if (token.length === 2) {
 			const [actionName, tokenValue] = token;
@@ -55,9 +59,12 @@ async function submit({ username, password }) {
 	this.status = 'loading';
 	try {
 		await this.$identity.signup(username, password);
-		this.message = 'Please check your email and confirm your account ✅';
+		this.show({
+			message: 'Please check your email and confirm your account ✅',
+			type: 'success',
+		});
 	} catch (error) {
-		this.message = `${error.json.msg} 🚫`;
+		this.show({ message: `${error.json.msg} 🚫` });
 		this.status = 'error';
 	}
 }
@@ -74,6 +81,9 @@ export default {
 	data,
 	methods: {
 		submit,
+		...mapActions({
+			show: 'notifications/show',
+		}),
 	},
 };
 </script>

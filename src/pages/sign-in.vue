@@ -9,6 +9,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 import appSignForm from '@/components/app-sign-form.vue';
 
 function data() {
@@ -28,8 +29,8 @@ async function submit({ username, password }) {
 		const response = await this.$identity.login(username, password, true);
 		this.$router.push('/admin/dashboard');
 	} catch (error) {
-		this.message = `${error.json.error_description} 🚫`;
 		this.status = 'error';
+		this.show({ message: `${error.json.error_description} 🚫` });
 	}
 }
 
@@ -44,6 +45,9 @@ export default {
 	data,
 	methods: {
 		submit,
+		...mapActions({
+			show: 'notifications/show',
+		}),
 	},
 };
 </script>

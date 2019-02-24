@@ -13,6 +13,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 import appBtn from '@/components/app-btn.vue';
 import appInput from '@/components/app-input.vue';
 import appText from '@/components/app-text.vue';
@@ -34,10 +35,10 @@ async function submit() {
 	try {
 		const user = await this.$identity.currentUser();
 		await user.update({ password: this.password });
-		this.message = 'Password Updated!';
+		this.show({ message: 'Password Updated! 👍🏼', type: 'success' });
 		this.status = 'finished';
 	} catch (error) {
-		this.message = error.json.msg;
+		this.show({ message: `${error.json.msg} 🚫` });
 		this.status = 'error';
 	}
 }
@@ -56,9 +57,9 @@ export default {
 	layout: 'admin',
 	methods: {
 		submit,
+		...mapActions({
+			show: 'notifications/show',
+		}),
 	},
 };
 </script>
-
-<style scoped>
-</style>

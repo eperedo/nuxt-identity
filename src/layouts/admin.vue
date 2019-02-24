@@ -1,5 +1,10 @@
 <template>
   <section class="wrapper">
+    <app-notification
+      :status="status"
+      :type="$store.state.notifications.type"
+      :text="$store.state.notifications.message"
+    />
     <header>
       <app-text tag-name="h1" class="medium">Administrator</app-text>
     </header>
@@ -21,12 +26,20 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+import appNotification from '@/components/app-notification.vue';
 import appText from '@/components/app-text.vue';
 
 export default {
 	name: 'layouts-admin',
 	components: {
+		appNotification,
 		appText,
+	},
+	computed: {
+		...mapGetters({
+			status: 'notifications/status',
+		}),
 	},
 	middleware: 'identity',
 };
