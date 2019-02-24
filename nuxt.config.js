@@ -1,11 +1,18 @@
 'use strict';
 
+if (process.env.NODE_ENV !== 'production') {
+	require('dotenv').config();
+}
+
 const config = {
+	env: {
+		NETLIFY_IDENTITY_URL: process.env.NETLIFY_IDENTITY_URL,
+	},
 	generate: {
 		dir: './../dist',
 	},
 	head: {
-		title: 'Nuxt Identity',
+		title: 'Nuxt & Netlify Identity',
 		meta: [
 			{ charset: 'utf-8' },
 			{ name: 'viewport', content: 'width=device-width, initial-scale=1' },
