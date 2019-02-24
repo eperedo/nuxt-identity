@@ -7,4 +7,6 @@ const auth = new GoTrue({
 	setCookie: true,
 });
 
-Vue.prototype.$identity = auth;
+export default ({ app }, inject) => {
+	inject('identity', auth);
+};
