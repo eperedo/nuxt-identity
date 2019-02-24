@@ -20,6 +20,20 @@
 </template>
 
 <script>
+const actions = {
+	'#recovery_token': {
+		message: 'Account was recovered!',
+		method: 'recover',
+		route: '/admin/change-password',
+		saveToken: true,
+	},
+	'#confirmation_token': {
+		message: 'Account was confirmed!',
+		method: 'confirm',
+		route: '/sign-in',
+	},
+};
+
 function data() {
 	return {
 		message: '',
@@ -33,16 +47,13 @@ async function created() {
 	if (hash) {
 		const token = hash.split('=');
 		if (token.length === 2) {
-			const action = token[0];
-			if (action === '#recovery_token') {
-				const response = await this.$identity.recover(token[1]);
+			const [actionName, tokenValue] = token;
+			const action = actions[actionName];
+			const response = await this.$identity[action.method](tokenValue);
+			if (action.saveToken) {
 				window.localStorage.setItem('token', response.token.access_token);
-				this.message = 'Account was recovered!';
-				this.$router.push('/admin/change-password');
-			} else if (action === '#confirmation_token') {
-				const confirm = await this.$identity.confirm(token[1]);
-				this.message = 'Account was confirmed!';
 			}
+			this.$router.push(action.route);
 		}
 	}
 }
