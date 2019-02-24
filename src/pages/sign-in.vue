@@ -1,55 +1,49 @@
 <template>
-  <section>
-    <header>
-      <h2>Login Page</h2>
-    </header>
-    <div class="alert">{{ message }}</div>
-    <form @submit.prevent="submit">
-      <div class="form-control">
-        <label class="form-label" for="username">Email</label>
-        <input class="form-input" type="email" id="username" v-model="username">
-      </div>
-      <div class="form-control">
-        <label class="form-label" for="password">Password</label>
-        <input class="form-input" type="password" id="password" v-model="password">
-      </div>
-      <div class="form-actions">
-        <button class="btn" type="submit">Sign In</button>
-      </div>
-    </form>
-  </section>
+  <app-sign-form
+    @submit="submit"
+    title="Sign In"
+    button-text="Sign In"
+    :button-status="disabledButton"
+    :message="message"
+  ></app-sign-form>
 </template>
 
 <script>
+import appSignForm from '@/components/app-sign-form.vue';
+
 function data() {
 	return {
+		status: 'idle',
 		message: '',
-		password: '',
-		username: '',
 	};
 }
 
-async function submit() {
+function disabledButton() {
+	return this.status === 'loading';
+}
+
+async function submit({ username, password }) {
+	this.status = 'loading';
 	try {
-		const response = await this.$identity.login(
-			this.username,
-			this.password,
-			true,
-		);
+		const response = await this.$identity.login(username, password, true);
 		this.$router.push('/admin/dashboard');
 	} catch (error) {
-		this.message = `${error.message} 🚫`;
+		this.message = `${error.json.error_description} 🚫`;
+		this.status = 'error';
 	}
 }
 
 export default {
-	name: 'pages-login',
+	name: 'pages-sign-in',
+	components: {
+		appSignForm,
+	},
+	computed: {
+		disabledButton,
+	},
 	data,
 	methods: {
 		submit,
 	},
 };
 </script>
-
-<style scoped>
-</style>

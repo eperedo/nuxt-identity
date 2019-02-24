@@ -1,25 +1,16 @@
 <template>
-  <div>Public Home Page
-    <section>
-      <div class="alert">{{ message }}</div>
-      <form @submit.prevent="submit">
-        <div class="form-control">
-          <label class="form-label" for="username">Email</label>
-          <input class="form-input" type="email" id="username" v-model="username">
-        </div>
-        <div class="form-control">
-          <label class="form-label" for="password">Password</label>
-          <input class="form-input" type="password" id="password" v-model="password">
-        </div>
-        <div class="form-actions">
-          <button class="btn" type="submit">Sign Up</button>
-        </div>
-      </form>
-    </section>
-  </div>
+  <app-sign-form
+    @submit="submit"
+    title="Sign Up"
+    button-text="Sign Up"
+    :button-status="disabledButton"
+    :message="message"
+  ></app-sign-form>
 </template>
 
 <script>
+import appSignForm from '@/components/app-sign-form.vue';
+
 const actions = {
 	'#recovery_token': {
 		message: 'Account was recovered!',
@@ -37,8 +28,7 @@ const actions = {
 function data() {
 	return {
 		message: '',
-		password: '',
-		username: '',
+		status: 'idle',
 	};
 }
 
@@ -49,31 +39,40 @@ async function created() {
 		if (token.length === 2) {
 			const [actionName, tokenValue] = token;
 			const action = actions[actionName];
-			const response = await this.$identity[action.method](tokenValue, true);
+			await this.$identity[action.method](tokenValue, true);
 			this.$router.push(action.route);
 		}
 	}
 }
 
-async function submit() {
+function disabledButton() {
+	return this.status === 'loading';
+}
+
+async function submit({ username, password }) {
+	this.status = 'loading';
 	try {
-		const response = await this.$identity.signup(this.username, this.password);
+		await this.$identity.signup(username, password);
 		this.message = 'Please check your email and confirm your account ✅';
 		this.$router.push('/sign-in');
 	} catch (error) {
-		this.message = error.message;
+		this.message = `${error.json.msg} 🚫`;
+		this.status = 'error';
 	}
 }
 
 export default {
 	name: 'pages-home',
 	created,
+	components: {
+		appSignForm,
+	},
+	computed: {
+		disabledButton,
+	},
 	data,
 	methods: {
 		submit,
 	},
 };
 </script>
-
-<style scoped>
-</style>
