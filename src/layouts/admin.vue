@@ -1,10 +1,6 @@
 <template>
   <section class="wrapper">
-    <app-notification
-      :status="status"
-      :type="$store.state.notifications.type"
-      :text="$store.state.notifications.message"
-    />
+    <app-notification :status="status" :type="type" :text="message"/>
     <header>
       <app-text tag-name="h1" class="medium">Administrator</app-text>
     </header>
@@ -26,7 +22,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapState } from 'vuex';
 import appNotification from '@/components/app-notification.vue';
 import appText from '@/components/app-text.vue';
 
@@ -37,6 +33,10 @@ export default {
 		appText,
 	},
 	computed: {
+		...mapState({
+			message: state => state.notifications.message,
+			type: state => state.notifications.type,
+		}),
 		...mapGetters({
 			status: 'notifications/status',
 		}),

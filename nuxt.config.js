@@ -5,6 +5,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 const config = {
+	css: ['~/stylesheets/font.css'],
 	env: {
 		NETLIFY_IDENTITY_URL: process.env.NETLIFY_IDENTITY_URL,
 	},
