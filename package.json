@@ -1,0 +1,26 @@
+{
+	"name": "nuxt-identity",
+	"version": "1.0.0",
+	"description": "A basic integration between nuxt spa and netlify",
+	"scripts": {
+		"dev": "nuxt",
+		"build": "nuxt build",
+		"start": "nuxt start",
+		"generate": "nuxt generate",
+		"now-build": "nuxt generate"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/eperedo/nuxt-identity.git"
+	},
+	"keywords": [],
+	"author": "Eduardo P. Rivero <jrperedo@gmail.com> (https://blog.eperedo.com/)",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/eperedo/nuxt-identity/issues"
+	},
+	"homepage": "https://github.com/eperedo/nuxt-identity#readme",
+	"dependencies": {
+		"nuxt": "2.4.3"
+	}
+}
