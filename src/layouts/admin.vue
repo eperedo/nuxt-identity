@@ -6,6 +6,8 @@
     <section>
       <ul>
         <li>
+          <nuxt-link to="/admin/dashboard">Dashboard</nuxt-link>
+          <nuxt-link to="/admin/change-password">Change Password</nuxt-link>
           <nuxt-link to="/admin/sign-out">Sign Out</nuxt-link>
         </li>
       </ul>

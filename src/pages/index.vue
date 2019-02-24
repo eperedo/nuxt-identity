@@ -35,7 +35,6 @@ async function created() {
 		if (token.length === 2) {
 			const confirm = await this.$identity.confirm(token[1]);
 			this.message = 'Account was confirmed!';
-			console.log('Confirm', confirm);
 		}
 	}
 }
