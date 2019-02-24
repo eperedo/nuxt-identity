@@ -1,6 +1,6 @@
 <template>
   <div class="form-control">
-    <label class="form-label" :for="$attrs.id">Email</label>
+    <label class="form-label" :for="$attrs.id">{{ label }}</label>
     <input
       class="form-input"
       v-bind="$attrs"

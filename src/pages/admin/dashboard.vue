@@ -1,36 +1,32 @@
 <template>
   <section>
     <header>
-      <h2>Dashboard</h2>
+      <app-text tag-name="h2" class="medium">Hello {{ user.email }}</app-text>
     </header>
-    <section>Hello {{ user.email }}</section>
     <section>
       <form @submit.prevent="submit">
-        <div class="form-control">
-          <label class="form-label" for="firstname">First Name</label>
-          <input class="form-input" type="text" id="firstname" v-model="firstname">
-        </div>
-        <div class="form-control">
-          <label class="form-label" for="lastname">Last Name</label>
-          <input class="form-input" type="text" id="lastname" v-model="lastname">
-        </div>
-        <div class="form-actions">
-          <button class="btn" type="submit">Save Profile</button>
-        </div>
+        <app-input type="text" id="firstname" v-model="firstname" label="First Name"/>
+        <app-input type="text" id="lastname" v-model="lastname" label="Last Name"/>
+        <app-btn :disabled="disabledButton" type="submit" text="Update Profile"/>
       </form>
     </section>
   </section>
 </template>
 
 <script>
+import appInput from '@/components/app-input.vue';
+import appText from '@/components/app-text.vue';
+import appBtn from '@/components/app-btn.vue';
+
 function data() {
 	return {
 		message: '',
+		firstname: '',
+		lastname: '',
+		status: 'idle',
 		user: {
 			email: '',
 		},
-		firstname: '',
-		lastname: '',
 	};
 }
 
@@ -41,16 +37,34 @@ async function created() {
 	this.lastname = user.user_metadata.lastname;
 }
 
+function disabledButton() {
+	return this.status === 'loading';
+}
+
 async function submit() {
-	const user = await this.$identity.currentUser();
-	await user.update({
-		data: { firstname: this.firstname, lastname: this.lastname },
-	});
-	this.message = 'User profile updated';
+	this.status = 'loading';
+	try {
+		const user = await this.$identity.currentUser();
+		await user.update({
+			data: { firstname: this.firstname, lastname: this.lastname },
+		});
+		this.message = 'User profile updated';
+		this.status = 'finished';
+	} catch (error) {
+		this.status = 'error';
+	}
 }
 
 export default {
 	name: 'pages-admin-dashboard',
+	components: {
+		appBtn,
+		appInput,
+		appText,
+	},
+	computed: {
+		disabledButton,
+	},
 	created,
 	data,
 	layout: 'admin',
