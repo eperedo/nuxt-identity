@@ -1,7 +1,7 @@
 <template>
   <section class="wrapper">
     <header>
-      <app-text tag-name="h1" class="medium">Public Layout</app-text>
+      <app-text tag-name="h1" class="medium">Public Page</app-text>
     </header>
     <nav>
       <ul class="list-container">
