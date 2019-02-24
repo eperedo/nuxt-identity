@@ -35,6 +35,8 @@ function data() {
 async function created() {
 	const { hash } = window.location;
 	if (hash) {
+		this.status = 'loading';
+		this.message = 'Verifying Account, please wait...';
 		const token = hash.split('=');
 		if (token.length === 2) {
 			const [actionName, tokenValue] = token;
@@ -54,7 +56,6 @@ async function submit({ username, password }) {
 	try {
 		await this.$identity.signup(username, password);
 		this.message = 'Please check your email and confirm your account ✅';
-		this.$router.push('/sign-in');
 	} catch (error) {
 		this.message = `${error.json.msg} 🚫`;
 		this.status = 'error';
