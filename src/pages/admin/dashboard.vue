@@ -23,14 +23,6 @@
 </template>
 
 <script>
-import GoTrue from 'gotrue-js';
-
-const auth = new GoTrue({
-	APIUrl: 'https://nuxt-identity.netlify.com/.netlify/identity',
-	audience: '',
-	setCookie: true,
-});
-
 function data() {
 	return {
 		message: '',
@@ -50,7 +42,7 @@ async function created() {
 }
 
 async function submit() {
-	const user = await auth.currentUser();
+	const user = await this.$identity.currentUser();
 	await user.update({
 		data: { firstname: this.firstname, lastname: this.lastname },
 	});

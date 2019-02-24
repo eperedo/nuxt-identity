@@ -8,6 +8,7 @@
         <li>
           <nuxt-link to="/">Sign Up</nuxt-link>
           <nuxt-link to="/sign-in">Sign In</nuxt-link>
+          <nuxt-link to="/recover-account">Recover Account</nuxt-link>
         </li>
       </ul>
     </section>

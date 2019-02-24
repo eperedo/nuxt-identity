@@ -9,10 +9,6 @@
           <label class="form-label" for="password">New Password</label>
           <input class="form-input" type="password" id="password" v-model="password">
         </div>
-        <!-- <div class="form-control">
-          <label class="form-label" for="lastname">Last Name</label>
-          <input class="form-input" type="text" id="lastname" v-model="lastname" />
-        </div>-->
         <div class="form-actions">
           <button class="btn" type="submit">Change Password</button>
         </div>
@@ -22,14 +18,6 @@
 </template>
 
 <script>
-import GoTrue from 'gotrue-js';
-
-const auth = new GoTrue({
-	APIUrl: 'https://nuxt-identity.netlify.com/.netlify/identity',
-	audience: '',
-	setCookie: true,
-});
-
 function data() {
 	return {
 		message: '',
@@ -38,7 +26,7 @@ function data() {
 }
 
 async function submit() {
-	const user = await auth.currentUser();
+	const user = await this.$identity.currentUser();
 	await user.update({ password: this.password });
 	this.message = 'Password Updated!';
 }
