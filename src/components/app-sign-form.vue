@@ -7,22 +7,16 @@
       <div class="alert" v-if="message">
         <p class="alert text">{{ message }}</p>
       </div>
-      <div class="form-control">
-        <label class="form-label" for="username">Email</label>
-        <input class="form-input" type="email" id="username" v-model="username">
-      </div>
-      <div class="form-control">
-        <label class="form-label" for="password">Password</label>
-        <input class="form-input" type="password" id="password" v-model="password">
-      </div>
-      <div class="form-actions">
-        <button :disabled="buttonStatus" class="btn" type="submit">{{ buttonText }}</button>
-      </div>
+      <app-input type="email" id="username" v-model="username" label="Email"/>
+      <app-input type="password" id="password" v-model="password" label="Password"/>
+      <app-btn :disabled="buttonStatus" type="submit" :text="buttonText"/>
     </form>
   </section>
 </template>
 
 <script>
+import appBtn from '@/components/app-btn.vue';
+import appInput from '@/components/app-input';
 import appText from '@/components/app-text.vue';
 
 function data() {
@@ -35,6 +29,8 @@ function data() {
 export default {
 	name: 'app-sign-form',
 	components: {
+		appBtn,
+		appInput,
 		appText,
 	},
 	data,

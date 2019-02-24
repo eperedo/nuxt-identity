@@ -13,9 +13,9 @@
 </template>
 
 <script>
+import appBtn from '@/components/app-btn.vue';
 import appInput from '@/components/app-input.vue';
 import appText from '@/components/app-text.vue';
-import appBtn from '@/components/app-btn.vue';
 
 function data() {
 	return {
