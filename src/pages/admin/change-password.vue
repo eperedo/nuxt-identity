@@ -5,15 +5,8 @@
     </header>
     <section>
       <form @submit.prevent="submit">
-        <!-- <div class="form-control">
-          <label class="form-label" for="password">New Password</label>
-          <input class="form-input" type="password" id="password" v-model="password">
-        </div>-->
         <app-input type="password" id="password" v-model="password" label="New Password"/>
         <app-btn :disabled="disabledButton" type="submit" text="Change Password"/>
-        <!-- <div class="form-actions">
-          <button class="btn" type="submit">Change Password</button>
-        </div>-->
       </form>
     </section>
   </section>

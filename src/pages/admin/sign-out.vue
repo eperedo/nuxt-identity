@@ -1,32 +1,32 @@
 <template>
   <section>
     <header>
-      <h2>Good Bye! Hope you come back soon! 🖖🏼</h2>
+      <app-text tag-name="h2" class="medium">Good Bye! Hope you come back soon! 🖖🏼</app-text>
     </header>
   </section>
 </template>
 
 <script>
-import GoTrue from 'gotrue-js';
-
-const auth = new GoTrue({
-	APIUrl: 'https://nuxt-identity.netlify.com/.netlify/identity',
-	audience: '',
-	setCookie: true,
-});
+import appText from '@/components/app-text.vue';
 
 async function created() {
-	const user = await this.$identity.currentUser();
-	await user.logout();
-	this.$router.push('/sign-in');
+	try {
+		const user = await this.$identity.currentUser();
+		await user.logout();
+		setTimeout(() => {
+			this.$router.push('/sign-in');
+		}, 1000);
+	} catch (error) {
+		alert('Wow wow, we cannot complete the logout process');
+	}
 }
 
 export default {
 	name: 'pages-admin-sign-out',
+	components: {
+		appText,
+	},
 	created,
 	layout: 'admin',
 };
 </script>
-
-<style scoped>
-</style>
