@@ -1,9 +1,8 @@
 <template>
   <section>
     <header>
-      <h2>Dashboard</h2>
+      <h2>Good Bye! Hope you come back soon! 🖖🏼</h2>
     </header>
-    <section>Hello {{ user.email }}</section>
   </section>
 </template>
 
@@ -16,30 +15,16 @@ const auth = new GoTrue({
 	setCookie: true,
 });
 
-function data() {
-	return {
-		user: {
-			email: '',
-		},
-	};
-}
-
 async function created() {
-	// const verify = await auth.verify(
-	// 	'recovery',
-	// 	window.localStorage.getItem('token'),
-	// 	true,
-	// );
-	// console.log('verify', verify);
 	const user = await auth.currentUser();
-	// debugger;
-	this.user.email = user.email;
+	await user.logout();
+	window.localStorage.clear();
+	this.$router.push('/sign-in');
 }
 
 export default {
-	name: 'pages-admin-dashboard',
+	name: 'pages-admin-sign-out',
 	created,
-	data,
 	layout: 'admin',
 };
 </script>

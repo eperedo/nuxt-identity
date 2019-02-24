@@ -21,6 +21,7 @@
 	},
 	"homepage": "https://github.com/eperedo/nuxt-identity#readme",
 	"dependencies": {
+		"gotrue-js": "0.9.24",
 		"nuxt": "2.4.3"
 	}
 }
