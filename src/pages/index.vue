@@ -36,7 +36,6 @@ async function created() {
 			const action = token[0];
 			if (action === '#recovery_token') {
 				const response = await this.$identity.recover(token[1]);
-				console.log(response);
 				window.localStorage.setItem('token', response.token.access_token);
 				this.message = 'Account was recovered!';
 				this.$router.push('/admin/change-password');
