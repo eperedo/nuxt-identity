@@ -20,14 +20,6 @@
 </template>
 
 <script>
-import GoTrue from 'gotrue-js';
-
-const auth = new GoTrue({
-	APIUrl: 'https://nuxt-identity.netlify.com/.netlify/identity',
-	audience: '',
-	setCookie: true,
-});
-
 function data() {
 	return {
 		message: '',
@@ -41,7 +33,7 @@ async function created() {
 	if (hash) {
 		const token = hash.split('=');
 		if (token.length === 2) {
-			const confirm = await auth.confirm(token[1]);
+			const confirm = await this.$identity.confirm(token[1]);
 			this.message = 'Account was confirmed!';
 			console.log('Confirm', confirm);
 		}
@@ -50,8 +42,7 @@ async function created() {
 
 async function submit() {
 	try {
-		const response = await auth.signup(this.username, this.password);
-		console.log(response);
+		const response = await this.$identity.signup(this.username, this.password);
 		this.$router.push('/sign-in');
 	} catch (error) {
 		this.message = error.message;

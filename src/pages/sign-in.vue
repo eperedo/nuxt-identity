@@ -21,14 +21,6 @@
 </template>
 
 <script>
-import GoTrue from 'gotrue-js';
-
-const auth = new GoTrue({
-	APIUrl: 'https://nuxt-identity.netlify.com/.netlify/identity',
-	audience: '',
-	setCookie: true,
-});
-
 function data() {
 	return {
 		message: '',
@@ -39,7 +31,11 @@ function data() {
 
 async function submit() {
 	try {
-		const response = await auth.login(this.username, this.password);
+		const response = await this.$identity.login(
+			this.username,
+			this.password,
+			true,
+		);
 		window.localStorage.setItem('token', response.token.access_token);
 		this.$router.push('/admin/dashboard');
 	} catch (error) {

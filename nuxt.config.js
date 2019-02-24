@@ -18,6 +18,7 @@ const config = {
 		link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
 	},
 	mode: 'spa',
+	plugins: ['~/plugins/identity.js'],
 	rootDir: './src',
 };
 

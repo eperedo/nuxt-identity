@@ -25,13 +25,13 @@ function data() {
 }
 
 async function created() {
-	// const verify = await auth.verify(
+	// const verify = await this.$identity.verify(
 	// 	'recovery',
 	// 	window.localStorage.getItem('token'),
 	// 	true,
 	// );
 	// console.log('verify', verify);
-	const user = await auth.currentUser();
+	const user = await this.$identity.currentUser();
 	// debugger;
 	this.user.email = user.email;
 }
